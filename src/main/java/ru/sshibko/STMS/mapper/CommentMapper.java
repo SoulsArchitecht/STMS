@@ -1,10 +1,10 @@
-package ru.sshibko.STSM.mapper;
+package ru.sshibko.STMS.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import ru.sshibko.STSM.dto.CommentDto;
-import ru.sshibko.STSM.model.Comment;
+import ru.sshibko.STMS.dto.CommentDto;
+import ru.sshibko.STMS.model.Comment;
 
 @Mapper
 public interface CommentMapper {

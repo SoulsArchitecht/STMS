@@ -1,4 +1,4 @@
-package ru.sshibko.STSM.model;
+package ru.sshibko.STMS.model;
 
 import jakarta.persistence.*;
 import lombok.*;

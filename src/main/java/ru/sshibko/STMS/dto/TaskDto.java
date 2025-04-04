@@ -1,8 +1,8 @@
-package ru.sshibko.STSM.dto;
+package ru.sshibko.STMS.dto;
 
 import lombok.*;
-import ru.sshibko.STSM.model.enums.TaskPriority;
-import ru.sshibko.STSM.model.enums.TaskStatus;
+import ru.sshibko.STMS.model.enums.TaskPriority;
+import ru.sshibko.STMS.model.enums.TaskStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;

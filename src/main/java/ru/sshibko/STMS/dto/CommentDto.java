@@ -1,4 +1,4 @@
-package ru.sshibko.STSM.dto;
+package ru.sshibko.STMS.dto;
 
 import lombok.*;
 

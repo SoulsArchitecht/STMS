@@ -1,9 +1,9 @@
-package ru.sshibko.STSM.mapper;
+package ru.sshibko.STMS.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import ru.sshibko.STSM.dto.UserDto;
-import ru.sshibko.STSM.model.User;
+import ru.sshibko.STMS.dto.UserDto;
+import ru.sshibko.STMS.model.User;
 
 @Mapper
 public interface UserMapper {

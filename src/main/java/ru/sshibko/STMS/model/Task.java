@@ -1,11 +1,11 @@
-package ru.sshibko.STSM.model;
+package ru.sshibko.STMS.model;
 
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import ru.sshibko.STSM.model.enums.TaskPriority;
-import ru.sshibko.STSM.model.enums.TaskStatus;
+import ru.sshibko.STMS.model.enums.TaskPriority;
+import ru.sshibko.STMS.model.enums.TaskStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;

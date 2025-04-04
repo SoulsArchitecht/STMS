@@ -1,10 +1,10 @@
-package ru.sshibko.STSM.mapper;
+package ru.sshibko.STMS.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
-import ru.sshibko.STSM.dto.TaskDto;
-import ru.sshibko.STSM.model.Task;
+import ru.sshibko.STMS.dto.TaskDto;
+import ru.sshibko.STMS.model.Task;
 
 @Mapper(uses = {UserMapper.class, CommentMapper.class})
 public interface TaskMapper {

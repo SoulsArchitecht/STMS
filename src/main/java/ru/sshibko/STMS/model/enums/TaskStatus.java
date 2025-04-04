@@ -1,4 +1,4 @@
-package ru.sshibko.STSM.model.enums;
+package ru.sshibko.STMS.model.enums;
 
 public enum TaskStatus {
     PENDING,
