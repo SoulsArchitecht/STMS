@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>ru.sshibko</groupId>
-	<artifactId>STSM</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>STSM</name>
-	<description>Serge Task System Management</description>
+	<artifactId>STMS</artifactId>
+	<version>1.0.0</version>
+	<name>STMS</name>
+	<description>Serge Task Management System</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -79,6 +79,18 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok-mapstruct-binding</artifactId>
 			<version>0.2.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<version>3.4.3</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.12.6</version>
 		</dependency>
 	</dependencies>
 
