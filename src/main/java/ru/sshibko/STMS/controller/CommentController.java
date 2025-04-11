@@ -12,7 +12,7 @@ import ru.sshibko.STMS.dto.CommentRequest;
 import ru.sshibko.STMS.service.CommentService;
 
 @RestController
-@RequestMapping("api/v1/tasks/{taskId}/comments")
+@RequestMapping("/api/v1/tasks/{taskId}/comments")
 @RequiredArgsConstructor
 @SecurityRequirement(name = "bearerAuth")
 @Tag(name = "Comments", description = "Comment Management API")

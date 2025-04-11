@@ -1,12 +1,15 @@
 package ru.sshibko.STMS.service;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
+import ru.sshibko.STMS.dto.AuthResponse;
 import ru.sshibko.STMS.dto.LoginRequest;
 import ru.sshibko.STMS.dto.RegisterRequest;
 import ru.sshibko.STMS.exception.EmailAlreadyExistsException;
@@ -16,42 +19,44 @@ import ru.sshibko.STMS.security.JwtTokenProvider;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
+@Validated
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
-
+    private final JwtTokenProvider tokenProvider;
     private final UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
 
-    private final JwtTokenProvider jwtTokenProvider;
-
-    public String login(LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginRequest.getEmail(),
-                        loginRequest.getPassword())
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return jwtTokenProvider.generateToken(authentication);
-    }
-
-    public String register(RegisterRequest registerRequest) {
-        if (userRepository.existsByEmail(registerRequest.getEmail())) {
+    @Transactional
+    public AuthResponse register(RegisterRequest request) {
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new EmailAlreadyExistsException("Email already in use");
         }
 
-        User user = User.builder()
-                .email(registerRequest.getEmail())
-                .password(registerRequest.getPassword())
-                .firstName(registerRequest.getFirstName())
-                .lastName(registerRequest.getLastName())
-                .role("ROLE_USER")
-                .build();
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setRole("ROLE_USER");
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        log.info("User registered with ID: {}", savedUser.getId());
 
-        return "User registered successfully";
+        return authenticateUser(request.getEmail(), request.getPassword());
+    }
+
+    public AuthResponse login(LoginRequest request) {
+        return authenticateUser(request.getEmail(), request.getPassword());
+    }
+
+    private AuthResponse authenticateUser(String email, String password) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(email, password)
+        );
+
+        String jwt = tokenProvider.generateToken(authentication);
+        return new AuthResponse(jwt);
     }
 }

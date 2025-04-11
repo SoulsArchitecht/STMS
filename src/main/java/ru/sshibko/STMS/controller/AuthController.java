@@ -3,7 +3,10 @@ package ru.sshibko.STMS.controller;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.sshibko.STMS.dto.AuthResponse;
 import ru.sshibko.STMS.dto.LoginRequest;
 import ru.sshibko.STMS.dto.RegisterRequest;
 import ru.sshibko.STMS.service.AuthService;
@@ -11,6 +14,7 @@ import ru.sshibko.STMS.service.AuthService;
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+@Slf4j
 @Tag(name = "Authentication", description = "Authentication API")
 public class AuthController {
 
@@ -18,13 +22,15 @@ public class AuthController {
 
     @PostMapping("/login")
     @Operation(summary = "Login user")
-    public String login(@RequestBody LoginRequest loginRequest) {
+    public AuthResponse login(@RequestBody LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 
     @PostMapping("/register")
     @Operation(summary = "Register new user")
-    public String register(@RequestBody RegisterRequest registerRequest) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public AuthResponse register(@RequestBody RegisterRequest registerRequest) {
+        log.info("Register request: {}", registerRequest);
         return authService.register(registerRequest);
     }
 }
