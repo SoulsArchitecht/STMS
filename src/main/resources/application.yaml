@@ -1,1 +1,36 @@
-spring.application.name=STSM
+server:
+  port: 8080
+spring:
+  application:
+    name: Serge-Task-Management-System
+  profiles:
+    active: dev
+    default: dev
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/stms_db
+    username: username
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: none
+        format_sql: true
+      show_sql: true
+
+  liquibase:
+    enabled: true
+    drop-first: false
+    default-schema: public
+
+app:
+  jwt-secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970988776655443232232324243243243243
+  jwt-expiration-milliseconds: 86400000 # 24h
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
