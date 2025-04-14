@@ -1,11 +1,13 @@
 package ru.sshibko.STMS.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import ru.sshibko.STMS.dto.TaskDto;
 import ru.sshibko.STMS.dto.TaskRequest;
 import ru.sshibko.STMS.exception.ResourceNotFoundException;
@@ -20,6 +22,7 @@ import ru.sshibko.STMS.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class TaskService {
 
     private final TaskRepository taskRepository;
@@ -53,7 +56,7 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskDto createTask(TaskRequest taskRequest) {
+    public TaskDto createTask(@Valid TaskRequest taskRequest) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User author = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
@@ -76,7 +79,7 @@ public class TaskService {
     }
 
     @Transactional
-    public TaskDto updateTask(Long id, TaskRequest taskRequest) {
+    public TaskDto updateTask(@Valid Long id, @Valid TaskRequest taskRequest) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
 

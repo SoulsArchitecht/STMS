@@ -1,6 +1,7 @@
 package ru.sshibko.STMS.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,7 +30,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public AuthResponse register(RegisterRequest request) {
+    public AuthResponse register(@Valid RegisterRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new EmailAlreadyExistsException("Email already in use");
         }
@@ -47,7 +48,7 @@ public class AuthService {
         return authenticateUser(request.getEmail(), request.getPassword());
     }
 
-    public AuthResponse login(LoginRequest request) {
+    public AuthResponse login(@Valid LoginRequest request) {
         return authenticateUser(request.getEmail(), request.getPassword());
     }
 

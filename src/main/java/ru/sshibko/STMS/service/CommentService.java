@@ -1,11 +1,13 @@
 package ru.sshibko.STMS.service;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 import ru.sshibko.STMS.dto.CommentDto;
 import ru.sshibko.STMS.dto.CommentRequest;
 import ru.sshibko.STMS.exception.ResourceNotFoundException;
@@ -20,6 +22,7 @@ import ru.sshibko.STMS.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
+@Validated
 public class CommentService {
 
     private final CommentRepository commentRepository;
@@ -34,7 +37,7 @@ public class CommentService {
     }
 
     @Transactional
-    public CommentDto addCommentToTask(Long taskId, CommentRequest commentRequest) {
+    public CommentDto addCommentToTask(@Valid Long taskId, @Valid CommentRequest commentRequest) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + taskId));
         String email = SecurityContextHolder.getContext().getAuthentication().getName();

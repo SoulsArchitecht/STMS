@@ -14,11 +14,11 @@ import lombok.*;
 @Builder
 public class LoginRequest {
 
-    @NotNull
-    @Email
+    @NotBlank(message = "Email cannot be null")
+    @Email(message = "email must be in correct form")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "Password cannot be null")
     @Size(min = 8)
     private String password;
 }
