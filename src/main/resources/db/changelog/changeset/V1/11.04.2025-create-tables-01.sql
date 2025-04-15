@@ -1,8 +1,8 @@
 -- liquibase formatted sql
 
--- changeset serge_sh:04042025-1
+-- changeset serge_sh:11042025-1
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id BIGSERIAL,
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -14,7 +14,7 @@ CREATE TABLE users (
     CONSTRAINT pk_users PRIMARY KEY (id)
 );
 
-CREATE TABLE tasks (
+CREATE TABLE IF NOT EXISTS tasks (
     id BIGSERIAL,
     title VARCHAR(255) NOT NULL,
     description text,
@@ -29,7 +29,7 @@ CREATE TABLE tasks (
     FOREIGN KEY (assignee_id) REFERENCES users(id)
 );
 
-CREATE TABLE comments (
+CREATE TABLE IF NOT EXISTS comments (
     id BIGSERIAL,
     text VARCHAR(255),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

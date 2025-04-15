@@ -24,12 +24,10 @@ public class TaskRequest {
     @Size(max = 10000, message = "Max length of the text is 10000")
     private String description;
 
-    @NotBlank(message = "Status cannot be null")
     @ValidTaskStatus(message = "Status must have a value of PENDING, IN_PROGRESS, COMPLETED")
     private TaskStatus status;
 
-    @NotBlank(message = "Priority cannot be null")
-    @ValidTaskStatus(message = "Priority must have a value of HIGH, MEDIUM, LOW")
+    @ValidTaskPriority(message = "Priority must have a value of HIGH, MEDIUM, LOW")
     private TaskPriority priority;
 
     @Positive
