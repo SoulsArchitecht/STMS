@@ -31,9 +31,11 @@ public class CommentService {
 
     private final TaskRepository taskRepository;
 
+    private final CommentMapper commentMapper;
+
     public Page<CommentDto> getCommentsByTaskId(Long taskId, Pageable pageable) {
         return commentRepository.findByTaskId(taskId, pageable)
-                .map(CommentMapper.INSTANCE::toDto);
+                .map(commentMapper::toDto);
     }
 
     @Transactional
@@ -41,12 +43,12 @@ public class CommentService {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + taskId));
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        User author = userRepository.findByEmail(email)
+        User commentAuthor = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
 
-        boolean isAuthor = task.getAuthor().getId().equals(author.getId());
-        boolean isAssignee = task.getAssignee() != null && task.getAssignee().getId().equals(author.getId());
-        boolean isAdmin = author.getRole().equals("ROLE_ADMIN");
+        boolean isAuthor = task.getAuthor().getId().equals(commentAuthor.getId());
+        boolean isAssignee = task.getAssignee() != null && task.getAssignee().getId().equals(commentAuthor.getId());
+        boolean isAdmin = commentAuthor.getRole().equals("ROLE_ADMIN");
 
         if (!isAuthor && !isAssignee && !isAdmin) {
             throw new UnauthorizedAccessException("You are not authorized to add comment to this task");
@@ -55,12 +57,12 @@ public class CommentService {
         Comment comment = Comment.builder()
                 .text(commentRequest.getText())
                 .task(task)
-                .author(author)
+                .author(commentAuthor)
                 .build();
 
         Comment savedComment = commentRepository.save(comment);
 
-        return CommentMapper.INSTANCE.toDto(savedComment);
+        return commentMapper.toDto(savedComment);
     }
 
     @Transactional

@@ -29,30 +29,32 @@ public class TaskService {
 
     private final UserRepository userRepository;
 
+    private final TaskMapper taskMapper;
+
     public Page<TaskDto> getAllTasks(Pageable pageable) {
         return taskRepository.findAll(pageable)
-                .map(TaskMapper.INSTANCE::toDto);
+                .map(taskMapper::toDto);
     }
 
     public Page<TaskDto> getUserTasks(Long userId, Pageable pageable) {
         return taskRepository.findAllUserTasks(userId, pageable)
-                .map(TaskMapper.INSTANCE::toDto);
+                .map(taskMapper::toDto);
     }
 
     public Page<TaskDto> getTasksByAuthorId(Long authorId, Pageable pageable) {
         return taskRepository.findAllByAuthorId(authorId, pageable)
-                .map(TaskMapper.INSTANCE::toDto);
+                .map(taskMapper::toDto);
     }
 
     public Page<TaskDto> getTasksByAssigneeId(Long assigneeId, Pageable pageable) {
         return taskRepository.findAllByAssigneeId(assigneeId, pageable)
-                .map(TaskMapper.INSTANCE::toDto);
+                .map(taskMapper::toDto);
     }
 
     public TaskDto getTaskById(Long id) {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
-        return TaskMapper.INSTANCE.toDto(task);
+        return taskMapper.toDto(task);
     }
 
     @Transactional
@@ -75,7 +77,7 @@ public class TaskService {
 
         Task savedTask = taskRepository.save(task);
 
-        return TaskMapper.INSTANCE.toDto(savedTask);
+        return taskMapper.toDto(savedTask);
     }
 
     @Transactional
@@ -111,7 +113,7 @@ public class TaskService {
 
         Task updatedTask = taskRepository.save(task);
 
-        return TaskMapper.INSTANCE.toDto(updatedTask);
+        return taskMapper.toDto(updatedTask);
     }
 
     @Transactional

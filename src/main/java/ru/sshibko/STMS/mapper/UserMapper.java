@@ -1,20 +1,32 @@
 package ru.sshibko.STMS.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-import ru.sshibko.STMS.dto.RegisterRequest;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.stereotype.Component;
 import ru.sshibko.STMS.dto.UserDto;
 import ru.sshibko.STMS.model.User;
 
-@Mapper
-public interface UserMapper {
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+@Component
+@RequiredArgsConstructor
+public class UserMapper {
 
-    UserDto toDto(User user);
+    public User toEntity(UserDto userDto) {
+        return User.builder()
+                .id(userDto.getId())
+                .email(userDto.getEmail())
+                .firstName(userDto.getFirstName())
+                .lastName(userDto.getLastName())
+                .role(userDto.getRole())
+                .build();
+    }
 
-    User toEntity(RegisterRequest request);
-
-    @Mapping(target = "password", ignore = true)
-    RegisterRequest toRegisterRequest(User user);
+    public UserDto toDto(User user) {
+        return UserDto.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .role(user.getRole())
+                .build();
+    }
 }

@@ -16,7 +16,9 @@ public class CommentDto {
 
     private String text;
 
-    private UserDto author;
+    private Long authorId;
 
-    LocalDateTime createdAt;
+    private Long taskId;
+
+    private LocalDateTime createdAt;
 }

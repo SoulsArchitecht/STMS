@@ -25,9 +25,9 @@ public class TaskDto {
 
     private TaskPriority priority;
 
-    private UserDto author;
+    private Long authorId;
 
-    private UserDto assignee;
+    private Long assigneeId;
 
     private LocalDateTime createdAt;
 
