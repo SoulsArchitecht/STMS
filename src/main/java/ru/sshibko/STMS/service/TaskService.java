@@ -3,6 +3,7 @@ package ru.sshibko.STMS.service;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ import ru.sshibko.STMS.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @Validated
 public class TaskService {
 
@@ -32,26 +34,31 @@ public class TaskService {
     private final TaskMapper taskMapper;
 
     public Page<TaskDto> getAllTasks(Pageable pageable) {
+        log.info("getting all tasks");
         return taskRepository.findAll(pageable)
                 .map(taskMapper::toDto);
     }
 
     public Page<TaskDto> getUserTasks(Long userId, Pageable pageable) {
+        log.info("getting user tasks");
         return taskRepository.findAllUserTasks(userId, pageable)
                 .map(taskMapper::toDto);
     }
 
     public Page<TaskDto> getTasksByAuthorId(Long authorId, Pageable pageable) {
+        log.info("getting tasks by authorId {}", authorId);
         return taskRepository.findAllByAuthorId(authorId, pageable)
                 .map(taskMapper::toDto);
     }
 
     public Page<TaskDto> getTasksByAssigneeId(Long assigneeId, Pageable pageable) {
+        log.info("getting tasks by assigneeId {}", assigneeId);
         return taskRepository.findAllByAssigneeId(assigneeId, pageable)
                 .map(taskMapper::toDto);
     }
 
     public TaskDto getTaskById(Long id) {
+        log.info("getting task by id {}", id);
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
         return taskMapper.toDto(task);
@@ -59,6 +66,7 @@ public class TaskService {
 
     @Transactional
     public TaskDto createTask(@Valid TaskRequest taskRequest) {
+        log.info("creating task with title {}", taskRequest.getTitle());
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         User author = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
@@ -82,6 +90,7 @@ public class TaskService {
 
     @Transactional
     public TaskDto updateTask(@Valid Long id, @Valid TaskRequest taskRequest) {
+        log.info("updating task with id {}", id);
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
 
@@ -118,6 +127,7 @@ public class TaskService {
 
     @Transactional
     public void deleteTask(Long id) {
+        log.info("deleting task with id {}", id);
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + id));
 

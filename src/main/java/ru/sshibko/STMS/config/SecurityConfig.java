@@ -3,6 +3,7 @@ package ru.sshibko.STMS.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -22,7 +23,7 @@ import ru.sshibko.STMS.security.JwtAuthenticationFilter;
 @Configuration
 @EnableWebSecurity(debug = true)
 @EnableMethodSecurity
-//@Profile("!dev")
+@Profile("!dev")
 @RequiredArgsConstructor
 public class SecurityConfig {
 

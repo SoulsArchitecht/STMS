@@ -3,6 +3,7 @@ package ru.sshibko.STMS.service;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +23,7 @@ import ru.sshibko.STMS.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 @Validated
 public class CommentService {
 
@@ -34,12 +36,14 @@ public class CommentService {
     private final CommentMapper commentMapper;
 
     public Page<CommentDto> getCommentsByTaskId(Long taskId, Pageable pageable) {
+        log.info("getting comments by taskId {}", taskId);
         return commentRepository.findByTaskId(taskId, pageable)
                 .map(commentMapper::toDto);
     }
 
     @Transactional
     public CommentDto addCommentToTask(@Valid Long taskId, @Valid CommentRequest commentRequest) {
+        log.info("Adding comment to task {}", taskId);
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new ResourceNotFoundException("Task not found with id: " + taskId));
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -67,6 +71,7 @@ public class CommentService {
 
     @Transactional
     public void deleteComment(Long commentId) {
+        log.info("Deleting comment with id: {}", commentId);
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new ResourceNotFoundException("Comment not found with id: " + commentId));
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
