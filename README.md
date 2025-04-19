@@ -79,6 +79,7 @@ yaml
 
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
+```
 
 
 ------------------------------------------
@@ -108,7 +109,7 @@ Content-Type: application/json
 
     Использование токена:
 
-Authorization: Bearer <ваш-token>
+Authorization: Bearer (ваш-token)
 
 
 ------------------------------------------
@@ -137,25 +138,26 @@ Authorization: Bearer <ваш-token>
 
 📂 Структура проекта
 
-
-```src/
+```
+src/
 ├── main/
 │   ├── java/
 │   │   └── com/example/taskmanagement/
-│   │       ├── config/          # Конфигурация
-│   │       ├── controller/      # REST контроллеры
-│   │       ├── dto/             # Data Transfer Objects
-│   │       ├── entity/          # JPA сущности
-│   │       ├── exception/       # Обработка ошибок
-│   │       ├── mapper/          # Мапперы
-│   │       ├── repository/      # Репозитории
-│   │       ├── security/        # Spring Security
-│   │       ├── service/         # Бизнес-логика
+│   │       ├── config/          - Конфигурация
+│   │       ├── controller/      - REST контроллеры
+│   │       ├── dto/             - Data Transfer Objects
+│   │       ├── entity/          - JPA сущности
+│   │       ├── exception/       - Обработка ошибок
+│   │       ├── mapper/          - Мапперы
+│   │       ├── repository/      - Репозитории
+│   │       ├── security/        - Spring Security
+│   │       ├── service/         - Бизнес-логика
 │   │       └── TaskManagementApplication.java
 │   └── resources/
-│       ├── db/migration/        # liquibase SQL миграции
-│       ├── application.yml      # Настройки
-└── test/                        # Тесты
+│       ├── db/migration/        - liquibase SQL миграции
+│       ├── application.yml      - Настройки
+└── test/                        - Тесты
+```
 
 
 ------------------------------------------
@@ -175,7 +177,7 @@ Authorization: Bearer <ваш-token>
 📝 Логирование
 
 Просмотр логов:
-```bash```
+`bash`
 
 * Логи приложения:
 docker-compose logs app
@@ -189,6 +191,12 @@ docker-compose logs db
 🧹 Очистка
 
 Полная остановка с удалением данных:
-```bash```
+`bash`
 
 docker-compose down -v
+
+-------------------------------------------
+
+### Приложение создано в демо-режиме. Полная документация, полная функциональность, контейнерное тестирование и прочие плюшки будут доступны только в платном режиме ;)
+
+по всем вопросам и предложениям писать владельцу репозитория. Email: sshibkodev@gmail.com
