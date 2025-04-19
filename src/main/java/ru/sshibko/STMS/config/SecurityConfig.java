@@ -21,9 +21,9 @@ import ru.sshibko.STMS.security.JwtAuthenticationEntryPoint;
 import ru.sshibko.STMS.security.JwtAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity()
 @EnableMethodSecurity
-@Profile("!dev")
+//@Profile("!dev")
 @RequiredArgsConstructor
 public class SecurityConfig {
 

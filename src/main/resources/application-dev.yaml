@@ -1,0 +1,37 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: Serge Task Management System
+  datasource:
+    url: jdbc:postgresql://localhost:5433/stms_db
+    username: username
+    password: password
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        ddl-auto: validate
+        format_sql: true
+        show_sql: true
+#        jdbc:
+#          batch_size: 30
+#          batch_versioned_data: true
+#        order_updates: true
+
+  liquibase:
+    enabled: true
+    drop-first: false
+    default-schema: public
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+
+app:
+  jwt-secret: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970988776655443232232324243243243243
+  jwt-expiration-milliseconds: 86400000 # 24h
+
+#logging:
+#  level:
+#    org.springframework.security: DEBUG
+#    org.hibernate.SQL: DEBUG
+#    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
